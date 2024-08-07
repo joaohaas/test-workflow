@@ -18,7 +18,7 @@ jobs:
           curl -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$PENDING_ID&$API_AUTH"
           ATTACHMENTS=$(curl "https://api.trello.com/1/cards/$TICKET_ID/attachments?fields=url&$API_AUTH")
           if [ -z $(echo "$ATTACHMENTS" | grep "${{ github.event.pull_request.url }}") ]; then
-            curl -XPOST "https://api.trello.com/1/cards/$TICKET_ID/attachments?url=https://github.com/joaohaas/test-workflow/pull/2&$API_AUTH"
+            curl -XPOST "https://api.trello.com/1/cards/$TICKET_ID/attachments?url=${{ github.event.pull_request.url }}&$API_AUTH"
           fi
       - name: Update Github PR
         env:
