@@ -16,10 +16,10 @@ jobs:
         run: |
           TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
           echo "will update list" $TICKET_ID
-          curl -s -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$PENDING_ID&$API_AUTH"
-          echo 'Updated list'
           HAS_LINK=$(curl -s "https://api.trello.com/1/cards/$TICKET_ID/attachments?fields=url&$API_AUTH" | grep "${{ github.event.pull_request.url }}")
           echo 'Got link' $HAS_LINK
+          curl -s -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$PENDING_ID&$API_AUTH"
+          echo 'Updated list'
           if [ -z "$HAS_LINK" ]; then
             echo "Will Update"
             curl -s -XPOST "https://api.trello.com/1/cards/$TICKET_ID/attachments?url=${{ github.event.pull_request.url }}&$API_AUTH"
