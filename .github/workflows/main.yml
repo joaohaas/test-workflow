@@ -1,0 +1,16 @@
+name: Test Workflow
+on:
+  pull_request:
+    types: [opened]
+jobs:
+  handle_trello:
+    name: Handle trello integration
+    permissions:
+      pull-requests: read
+    runs-on: ubuntu-latest
+    env:
+      PR_BODY: ${{ github.event.pull_request.body }}
+    steps:
+      - run: echo 'Pull request with body ${{ github.event.pull_request.body }} maybe $PR_BODY or ' $PR_BODY
+      
+    
