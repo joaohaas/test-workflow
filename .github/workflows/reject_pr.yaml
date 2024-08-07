@@ -21,4 +21,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
-        run: gh pr edit ${{ github.event.pull_request.number }} --add-label 'Needs Work'
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label 'Needs Work' --remove-label 'Needs Review'
