@@ -1,0 +1,19 @@
+name: Handle Rejected PRs
+on:
+  pull_request_review:
+    types: [submitted]
+env:
+  API_AUTH: "key=83f6f0494e8f3790e73f592fcc6d073b&token=ATTA8a1bd95c7b80088ac5fb2add5fa8d5c5dfeb232a703f36fac8d0a6683accedb7A78C190F"
+  WORKING_ID: 66b3b45fbd7dc7a831b372d0
+jobs:
+  handle-trello-card:
+    permissions:
+      pull-requests: read
+    if: github.event.review.state == 'REJECTED'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
+          curl -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$WORKING_ID&$API_AUTH"
+      
+    
