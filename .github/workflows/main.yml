@@ -12,7 +12,7 @@ jobs:
     env:
       PR_BODY: ${{ github.event.pull_request.body }}
     steps:
-      - run: TICKET_ID=echo $PR_BODY | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }'
+      - run: TICKET_ID=echo '$PR_BODY' | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }'
       - run: echo $TICKET_ID
       
     
