@@ -1,6 +1,6 @@
 name: Test Workflow
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, ready_for_review, review_requested]
 env:
   PENDING_ID: 66b3b45f4e93731595994bb2
