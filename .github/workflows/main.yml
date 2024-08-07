@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.pull_request.body, 'https://trello.com/c/') }}
     steps:
-      - run: TICKET_ID=echo '${{ github.event.pull_request.body }}' | grep -o 'https://trello.com/c/.*/' test.md | awk -F '/' '{ print $5 }'
+      - run: TICKET_ID=echo '${{ github.event.pull_request.body }}' | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }'
       - run: echo $TICKET_ID
       
     
