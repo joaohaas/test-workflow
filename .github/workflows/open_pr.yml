@@ -16,13 +16,10 @@ jobs:
         run: |
           TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
           curl -s -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$PENDING_ID&$API_AUTH"
-          echo 'Success?'
-          curl -s "https://api.trello.com/1/cards/$TICKET_ID/attachments?fields=url&$API_AUTH"
-          echo 'Ok?'
-          # HAS_LINK=$(curl -s "https://api.trello.com/1/cards/$TICKET_ID/attachments?fields=url&$API_AUTH" | grep "${{ github.event.pull_request.url }}")
-          # if [ -z "$HAS_LINK" ]; then
-          #   curl -s -XPOST "https://api.trello.com/1/cards/$TICKET_ID/attachments?url=${{ github.event.pull_request.url }}&$API_AUTH"
-          # fi
+          HAS_LINK=$(curl -s "https://api.trello.com/1/cards/$TICKET_ID/attachments?fields=url&$API_AUTH" | grep "https://github.com/joaohaas/test-workflow/pull/2")
+          if [ -z "$HAS_LINK" ]; then
+            curl -s -XPOST "https://api.trello.com/1/cards/$TICKET_ID/attachments?url=https://github.com/joaohaas/test-workflow/pull/2&$API_AUTH"
+          fi
       - name: Update Github PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
