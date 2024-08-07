@@ -7,13 +7,11 @@ env:
   WORKING_ID: 66b3b45fbd7dc7a831b372d0
 jobs:
   handle-trello-card:
-    # if: github.event.review.state == 'REJECTED'
+    if: github.event.review.state == 'changes_requested'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.event.review.state }}"
-      - run: echo "${{ github.event.pull_request.body }}"
-      # - run: |
-      #     TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
-      #     curl -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$WORKING_ID&$API_AUTH"
+      - run: |
+          TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
+          curl -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$WORKING_ID&$API_AUTH"
       
     
