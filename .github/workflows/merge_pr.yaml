@@ -3,7 +3,7 @@ on:
   pull_request_target:
     types: [closed]
 jobs:
-  handle-trello-card:
+  handle-pr-merge:
     if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     steps:
@@ -15,5 +15,3 @@ jobs:
         run: |
           TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
           curl -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$VALIDATED_ID&$API_AUTH"
-      
-    
