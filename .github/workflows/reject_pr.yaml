@@ -6,6 +6,8 @@ jobs:
   handle-pr-rejected:
     if: ${{ github.event.review.state == 'changes_requested' }}
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Update Trello Card
         if: ${{ contains(github.event.pull_request.body, 'https://trello.com/c/') }}
