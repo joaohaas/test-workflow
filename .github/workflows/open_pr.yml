@@ -5,6 +5,8 @@ on:
 jobs:
   handle-pr-open:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Update Trello Card
         if: ${{ contains(github.event.pull_request.body, 'https://trello.com/c/') }}
