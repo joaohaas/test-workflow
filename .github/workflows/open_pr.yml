@@ -14,6 +14,8 @@ jobs:
           PENDING_ID: 66b3b45f4e93731595994bb2
           API_AUTH: "key=83f6f0494e8f3790e73f592fcc6d073b&token=ATTA8a1bd95c7b80088ac5fb2add5fa8d5c5dfeb232a703f36fac8d0a6683accedb7A78C190F"
         run: |
+          echo IS_DRAFT
+          echo "${{ github.event.pull_request.draft }}"
           TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
           curl -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$PENDING_ID&$API_AUTH"
           ATTACHMENTS=$(curl "https://api.trello.com/1/cards/$TICKET_ID/attachments?fields=url&$API_AUTH")
