@@ -9,7 +9,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Update Trello Card
-        if: ${{ contains(github.event.pull_request.body, 'https://trello.com/c/') }}
+        if: ${{ contains(github.event.pull_request.body, 'https://trello.com/c/') && !github.event.pull_request.draft }}
         env:
           PENDING_ID: 66b3b45f4e93731595994bb2
           API_AUTH: "key=83f6f0494e8f3790e73f592fcc6d073b&token=ATTA8a1bd95c7b80088ac5fb2add5fa8d5c5dfeb232a703f36fac8d0a6683accedb7A78C190F"
