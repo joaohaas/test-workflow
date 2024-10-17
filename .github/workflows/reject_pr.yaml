@@ -1,7 +1,7 @@
 name: Reject PR Workflow
 on:
-  pull_request_review_comment:
-    types: [created, deleted]
+  pull_request_review:
+    types: [submitted]
 jobs:
   handle-pr-rejected:
     runs-on: ubuntu-latest
