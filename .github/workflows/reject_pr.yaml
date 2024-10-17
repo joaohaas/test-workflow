@@ -1,24 +1,11 @@
 name: Reject PR Workflow
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request_target:
+    types: [assigned, unassigned, labeled, unlabeled, opened, edited, closed, reopened, synchronize, converted_to_draft, ready_for_review, locked, unlocked, review_requested, review_request_removed, auto_merge_enabled, auto_merge_disabled]
 jobs:
   handle-pr-rejected:
-    if: ${{ github.event.review.state == 'changes_requested' }}
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
     steps:
-      - name: Update Trello Card
-        if: ${{ contains(github.event.pull_request.body, 'https://trello.com/c/') }}
-        env:
-          SPRINT_ID: 66b3b45fbd7dc7a831b372d0
-          API_AUTH: "key=83f6f0494e8f3790e73f592fcc6d073b&token=ATTA8a1bd95c7b80088ac5fb2add5fa8d5c5dfeb232a703f36fac8d0a6683accedb7A78C190F"
+      - name: Test
         run: |
-          TICKET_ID=$(echo "${{ github.event.pull_request.body }}" | grep -o 'https://trello.com/c/.*/' | awk -F '/' '{ print $5 }')
-          curl -XPUT "https://api.trello.com/1/cards/$TICKET_ID?idList=$SPRINT_ID&$API_AUTH"
-      - name: Update Github PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-        run: gh pr edit ${{ github.event.pull_request.number }} --add-label 'Needs Work' --remove-label 'Needs Review'
+          echo 'abc'
