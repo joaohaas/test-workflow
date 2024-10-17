@@ -2,10 +2,17 @@ name: Reject PR Workflow
 on:
   pull_request_review:
     types: [submitted]
+  pull_request_target:
+    types: [labeled]
 jobs:
   handle-pr-rejected:
+    if: ${{ (github.event.action == 'submitted' && github.event.review.state == 'changes_requested') || (github.event.action == 'labeled' && github.event.label.name == 'Has Conflicts') }}
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
-      - name: Test
-        run: |
-          echo 'abc'
+      - name: Update Github PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label 'Needs Work' --remove-label 'Needs Review'
