@@ -6,7 +6,7 @@ on:
     types: [labeled]
 jobs:
   handle-pr-rejected:
-    if: ${{ (github.event.action == 'submitted' && github.event.review.state == 'changes_requested') || (github.event.action == 'labeled' && github.event.label.name == 'Has Conflicts') }}
+    if: ${{ (github.event.action == 'submitted' && github.event.review.state == 'changes_requested') || (github.event.action == 'labeled' && github.event.label.name == 'Needs Work') }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
